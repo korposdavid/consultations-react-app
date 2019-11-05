@@ -12,7 +12,16 @@ export default class ConsultationList extends Component<Props, State> {
 
   render() {
     return this.props.consultations.map(consultation => (
-      <ConsultationItem key={consultation.id} consultation={consultation} />
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <ConsultationItem
+              key={consultation.id}
+              consultation={consultation}
+            />
+          </div>
+        </div>
+      </div>
     ));
   }
 }
