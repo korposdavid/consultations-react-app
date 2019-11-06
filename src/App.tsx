@@ -6,7 +6,7 @@ import ConsultationList from "./components/ConsultationList";
 import myContext from "./components/myContext";
 
 class App extends Component {
-  state = { username: "my   User", id: 4, level: "WEB", consultations: [] };
+  state = { username: "myUser", id: 4, level: "WEB", consultations: [] };
 
   componentDidMount() {
     axios.get("http://localhost:8080/consultations").then(response => {
