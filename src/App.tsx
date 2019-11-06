@@ -6,9 +6,7 @@ import ConsultationList from "./components/ConsultationList";
 import myContext from "./components/myContext";
 
 class App extends Component {
-  state = {
-    consultations: []
-  };
+  state = { username: "my   User", id: 4, level: "WEB", consultations: [] };
 
   componentDidMount() {
     axios.get("http://localhost:8080/consultations").then(response => {
@@ -18,12 +16,10 @@ class App extends Component {
 
   render() {
     return (
-      <myContext.Provider value={{ username: "myUser", id: 4, level: "WEB" }}>
+      <myContext.Provider value={{ ...this.state }}>
         <div className="App">
           <Header />
-          <ConsultationList
-            consultations={this.state.consultations}
-          ></ConsultationList>
+          <ConsultationList></ConsultationList>
         </div>
       </myContext.Provider>
     );

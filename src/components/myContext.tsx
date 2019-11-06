@@ -1,9 +1,10 @@
 import { createContext } from "react";
 
 const myContext = createContext({
-  username: "myUser",
-  id: 4,
-  level: "WEB"
+  username: "default",
+  id: 0,
+  level: "default",
+  consultations: []
 });
 
 export default myContext;
