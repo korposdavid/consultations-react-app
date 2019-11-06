@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
+import axios from "axios";
+import myContext from "./myContext";
 
 interface Props {
   consultation: ConsultationModel;
+  username: string;
+  id: number;
+  level: string;
 }
 interface State {}
 
@@ -19,8 +24,7 @@ export default class ConsultationItem extends Component<Props, State> {
       id
     } = this.props.consultation;
 
-    const hostName = this.props.consultation.host.username;
-    const hostLevel = this.props.consultation.host.level;
+    const { username, level } = this.props.consultation.host;
     const participants = this.props.consultation.participants
       .map(x => x.username)
       .join(", ");
@@ -32,11 +36,14 @@ export default class ConsultationItem extends Component<Props, State> {
           <p className="list-group-item-text">
             Subjects: {subjects.join(", ")}
           </p>
-          <p className="list-group-item-text">
-            Host: {hostName + " " + hostLevel}
-          </p>
+          <p className="list-group-item-text">Host: {username + " " + level}</p>
           <p className="list-group-item-text">Participants: {participants}</p>
         </div>
+        <myContext.Consumer>
+          {value => {
+            return <span>{value.username}</span>;
+          }}
+        </myContext.Consumer>
       </a>
     );
   }
