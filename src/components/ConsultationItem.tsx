@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
+import myContext from "./myContext";
+import axios from "axios";
 
 interface Props {
   consultation: ConsultationModel;
@@ -14,16 +16,25 @@ export default class ConsultationItem extends Component<Props, State> {
     buttonText: "Show more!"
   };
 
-  changeView(){
+  handleJoin(userID: number, consultationID: number) {
+    axios({
+      method: "post",
+      url: "http://10.44.13.27:8080/joinConsultation",
+      data: {
+        userID: userID,
+        consultationID: consultationID
+      }
+    });
+  }
 
+  changeView() {
     this.setState({
-      showDetailedView : ! this.state.showDetailedView,
-    })
-    if(this.state.buttonText != this.state.showMore){
-      this.setState({buttonText : this.state.showMore})
-    }
-    else if(this.state.buttonText != this.state.showLess){
-      this.setState({buttonText : this.state.showLess})
+      showDetailedView: !this.state.showDetailedView
+    });
+    if (this.state.buttonText != this.state.showMore) {
+      this.setState({ buttonText: this.state.showMore });
+    } else if (this.state.buttonText != this.state.showLess) {
+      this.setState({ buttonText: this.state.showLess });
     }
   }
 
@@ -43,27 +54,6 @@ export default class ConsultationItem extends Component<Props, State> {
       .join(", ");
 
     return (
-      <a className="list-group-item clearfix">
-        <div>
-          <h4 className="list-group-item-header">{date}</h4>
-          <p className="list-group-item-text">
-            Subjects: {subjects.join(", ")}
-          </p>
-          <p className="list-group-item-text">
-            Host: {hostName + " " + hostLevel}
-          </p>
-          { this.state.showDetailedView ?
-            <div>
-              <p className="list-group-item-text">Participants: {participants}</p>
-              <p className="list-group-item-text">Duration: {duration}</p>
-              <p className="list-group-item-text">ParticipantLimit: {participantLimit}</p>
-              <p className="list-group-item-text">Description: {description}</p>
-            </div>
-            :null
-          }
-          <button className="btn btn-success" onClick={()=>this.changeView()}>{this.state.buttonText}</button>
-        </div>
-      </a>
       <myContext.Consumer>
         {value => {
           return (
@@ -79,7 +69,32 @@ export default class ConsultationItem extends Component<Props, State> {
                 <p className="list-group-item-text">
                   Participants: {participants}
                 </p>
-                <span>{value.username}</span>
+                {this.state.showDetailedView ? (
+                  <div>
+                    <p className="list-group-item-text">
+                      Participants: {participants}
+                    </p>
+                    <p className="list-group-item-text">Duration: {duration}</p>
+                    <p className="list-group-item-text">
+                      ParticipantLimit: {participantLimit}
+                    </p>
+                    <p className="list-group-item-text">
+                      Description: {description}
+                    </p>
+                  </div>
+                ) : null}
+                <button
+                  className="btn btn-success m-2"
+                  onClick={() => this.changeView()}
+                >
+                  {this.state.buttonText}
+                </button>
+                <button
+                  onClick={() => this.handleJoin(value.id, id)}
+                  className="btn btn-success m-2"
+                >
+                  Join
+                </button>
               </div>
             </a>
           );
