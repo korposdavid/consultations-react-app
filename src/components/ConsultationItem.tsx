@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
 import myContext from "./myContext";
 import axios from "axios";
+import { valueToNode } from "@babel/types";
 
 interface Props {
   consultation: ConsultationModel;
@@ -11,6 +12,7 @@ interface State {}
 export default class ConsultationItem extends Component<Props, State> {
   state = {
     showDetailedView: false,
+    showJoinButton: true,
     showMore: "Show more!",
     showLess: "Show less!",
     buttonText: "Show more!"
@@ -25,15 +27,21 @@ export default class ConsultationItem extends Component<Props, State> {
         consultationID: consultationID
       }
     });
+    this.setState({
+      showJoinButton: !this.state.showJoinButton
+    });
+    this.setState((state) => {
+      this.props.consultation
+    })
   }
 
   changeView() {
     this.setState({
       showDetailedView: !this.state.showDetailedView
     });
-    if (this.state.buttonText != this.state.showMore) {
+    if (this.state.buttonText !== this.state.showMore) {
       this.setState({ buttonText: this.state.showMore });
-    } else if (this.state.buttonText != this.state.showLess) {
+    } else if (this.state.buttonText !== this.state.showLess) {
       this.setState({ buttonText: this.state.showLess });
     }
   }
@@ -67,17 +75,11 @@ export default class ConsultationItem extends Component<Props, State> {
                   Host: {username + " " + level}
                 </p>
                 <p className="list-group-item-text">
-                  Participants: {participants}
+                  Participants: {participants} { !this.state.showJoinButton ? ("," + value.username) : null }
                 </p>
                 {this.state.showDetailedView ? (
                   <div>
-                    <p className="list-group-item-text">
-                      Participants: {participants}
-                    </p>
                     <p className="list-group-item-text">Duration: {duration}</p>
-                    <p className="list-group-item-text">
-                      ParticipantLimit: {participantLimit}
-                    </p>
                     <p className="list-group-item-text">
                       Description: {description}
                     </p>
@@ -89,12 +91,14 @@ export default class ConsultationItem extends Component<Props, State> {
                 >
                   {this.state.buttonText}
                 </button>
+                { this.state.showJoinButton ? (
                 <button
                   onClick={() => this.handleJoin(value.id, id)}
                   className="btn btn-success m-2"
                 >
                   Join
                 </button>
+                  ) : null}
               </div>
             </a>
           );
