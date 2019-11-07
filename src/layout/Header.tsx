@@ -8,15 +8,24 @@ export const Header: React.FC<Props> = () => {
   return (
     <header style={headerStyle}>
       <h1>Coolzontations</h1>
-      <Link to="/"> Home </Link>
+      <Link className={linkClass} to="/">
+        {" "}
+        Home{" "}
+      </Link>
       <myContext.Consumer>
         {value => {
-          return <Link to="/myConsultations">{value.username}</Link>;
+          return (
+            <Link className={linkClass} to="/myConsultations">
+              {value.username}
+            </Link>
+          );
         }}
       </myContext.Consumer>
     </header>
   );
 };
+
+const linkClass = "btn btn-outline-success m-2";
 
 const headerStyle = {
   background: "#333",

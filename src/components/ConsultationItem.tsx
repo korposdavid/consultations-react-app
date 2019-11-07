@@ -12,13 +12,28 @@ interface State {}
 export default class ConsultationItem extends Component<Props, State> {
   state = {
     showDetailedView: false,
-    showJoinButton: true,
+    isJoined: false,
     showMore: "Show more!",
     showLess: "Show less!",
     buttonText: "Show more!"
   };
 
-  handleJoin(userID: number, consultationID: number,userConsulatations: ConsultationModel[]) {
+  userAlreadyJoined(id: number) {
+    for (const user of this.props.consultation.participants) {
+      if (user.id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  handleJoin(
+    userID: number,
+    consultationID: number,
+    userConsulatations: ConsultationModel[],
+    userLevel: string,
+    userName: string
+  ) {
     axios({
       method: "post",
       url: "http://localhost:8080/joinConsultation",
@@ -27,10 +42,13 @@ export default class ConsultationItem extends Component<Props, State> {
         consultationID: consultationID
       }
     });
-    this.setState({
-      showJoinButton: false
+    this.setState({ isJoined: true });
+    userConsulatations.push(this.props.consultation);
+    this.props.consultation.participants.push({
+      username: userName,
+      id: userID,
+      level: userLevel
     });
-    userConsulatations.push(this.props.consultation)
   }
 
   changeView() {
@@ -73,7 +91,7 @@ export default class ConsultationItem extends Component<Props, State> {
                   Host: {username + " " + level}
                 </p>
                 <p className="list-group-item-text">
-                  Participants: {participants} { !this.state.showJoinButton ? ("," + value.username) : null }
+                  Participants: {participants}{" "}
                 </p>
                 {this.state.showDetailedView ? (
                   <div>
@@ -89,14 +107,22 @@ export default class ConsultationItem extends Component<Props, State> {
                 >
                   {this.state.buttonText}
                 </button>
-                { this.state.showJoinButton ? (
-                <button
-                  onClick={() => this.handleJoin(value.id, id,value.userConsultations)}
-                  className="btn btn-success m-2"
-                >
-                  Join
-                </button>
-                  ) : null}
+                {!this.userAlreadyJoined(value.id) ? (
+                  <button
+                    onClick={() =>
+                      this.handleJoin(
+                        value.id,
+                        id,
+                        value.userConsultations,
+                        value.level,
+                        value.username
+                      )
+                    }
+                    className="btn btn-success m-2"
+                  >
+                    Join
+                  </button>
+                ) : null}
               </div>
             </button>
           );
