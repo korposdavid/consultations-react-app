@@ -19,7 +19,7 @@ export default class ConsultationItem extends Component<Props, State> {
   handleJoin(userID: number, consultationID: number) {
     axios({
       method: "post",
-      url: "http://10.44.13.27:8080/joinConsultation",
+      url: "http://localhost:8080/joinConsultation",
       data: {
         userID: userID,
         consultationID: consultationID
@@ -57,7 +57,7 @@ export default class ConsultationItem extends Component<Props, State> {
       <myContext.Consumer>
         {value => {
           return (
-            <a className="list-group-item clearfix">
+            <button className="list-group-item clearfix btn-block m-2">
               <div>
                 <h4 className="list-group-item-header">{date}</h4>
                 <p className="list-group-item-text">
@@ -96,7 +96,7 @@ export default class ConsultationItem extends Component<Props, State> {
                   Join
                 </button>
               </div>
-            </a>
+            </button>
           );
         }}
       </myContext.Consumer>
