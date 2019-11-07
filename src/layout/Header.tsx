@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import myContext from "../components/myContext";
 
 interface Props {}
 
@@ -8,7 +9,11 @@ export const Header: React.FC<Props> = () => {
     <header style={headerStyle}>
       <h1>Coolzontations</h1>
       <Link to="/"> Home </Link>
-      <Link to="/myConsultations">My Consultations</Link>
+      <myContext.Consumer>
+        {value => {
+          return <Link to="/myConsultations">{value.username}</Link>;
+        }}
+      </myContext.Consumer>
     </header>
   );
 };
