@@ -9,7 +9,7 @@ class App extends Component {
   state = { username: "myUser", id: 4, level: "WEB", consultations: [] };
 
   componentDidMount() {
-    axios.get("http://localhost:8080/consultations").then(response => {
+    axios.get("http://10.44.13.27:8080/consultations").then(response => {
       this.setState({ consultations: response.data });
     });
   }
