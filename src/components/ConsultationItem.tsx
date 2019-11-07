@@ -18,7 +18,7 @@ export default class ConsultationItem extends Component<Props, State> {
     buttonText: "Show more!"
   };
 
-  handleJoin(userID: number, consultationID: number) {
+  handleJoin(userID: number, consultationID: number,userConsulatations: ConsultationModel[]) {
     axios({
       method: "post",
       url: "http://10.44.13.27:8080/joinConsultation",
@@ -28,11 +28,9 @@ export default class ConsultationItem extends Component<Props, State> {
       }
     });
     this.setState({
-      showJoinButton: !this.state.showJoinButton
+      showJoinButton: false
     });
-    this.setState((state) => {
-      this.props.consultation
-    })
+    userConsulatations.push(this.props.consultation)
   }
 
   changeView() {
@@ -93,7 +91,7 @@ export default class ConsultationItem extends Component<Props, State> {
                 </button>
                 { this.state.showJoinButton ? (
                 <button
-                  onClick={() => this.handleJoin(value.id, id)}
+                  onClick={() => this.handleJoin(value.id, id,value.userConsultations)}
                   className="btn btn-success m-2"
                 >
                   Join
