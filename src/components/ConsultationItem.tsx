@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
 import myContext from "./myContext";
+import axios from "axios";
 
 interface Props {
   consultation: ConsultationModel;
@@ -8,7 +9,34 @@ interface Props {
 interface State {}
 
 export default class ConsultationItem extends Component<Props, State> {
-  state = {};
+  state = {
+    showDetailedView: false,
+    showMore: "Show more!",
+    showLess: "Show less!",
+    buttonText: "Show more!"
+  };
+
+  handleJoin(userID: number, consultationID: number) {
+    axios({
+      method: "post",
+      url: "http://10.44.13.27:8080/joinConsultation",
+      data: {
+        userID: userID,
+        consultationID: consultationID
+      }
+    });
+  }
+
+  changeView() {
+    this.setState({
+      showDetailedView: !this.state.showDetailedView
+    });
+    if (this.state.buttonText != this.state.showMore) {
+      this.setState({ buttonText: this.state.showMore });
+    } else if (this.state.buttonText != this.state.showLess) {
+      this.setState({ buttonText: this.state.showLess });
+    }
+  }
 
   render() {
     const {
@@ -41,7 +69,32 @@ export default class ConsultationItem extends Component<Props, State> {
                 <p className="list-group-item-text">
                   Participants: {participants}
                 </p>
-                <span>{value.username}</span>
+                {this.state.showDetailedView ? (
+                  <div>
+                    <p className="list-group-item-text">
+                      Participants: {participants}
+                    </p>
+                    <p className="list-group-item-text">Duration: {duration}</p>
+                    <p className="list-group-item-text">
+                      ParticipantLimit: {participantLimit}
+                    </p>
+                    <p className="list-group-item-text">
+                      Description: {description}
+                    </p>
+                  </div>
+                ) : null}
+                <button
+                  className="btn btn-success m-2"
+                  onClick={() => this.changeView()}
+                >
+                  {this.state.buttonText}
+                </button>
+                <button
+                  onClick={() => this.handleJoin(value.id, id)}
+                  className="btn btn-success m-2"
+                >
+                  Join
+                </button>
               </div>
             </a>
           );

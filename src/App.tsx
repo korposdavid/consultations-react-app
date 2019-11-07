@@ -16,7 +16,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:8080/consultations").then(response => {
+    axios.get("http://10.44.13.27:8080/consultations").then(response => {
       this.setState({ consultations: response.data });
     });
     axios.get("http://localhost:8080/myConsultations").then(response => {
