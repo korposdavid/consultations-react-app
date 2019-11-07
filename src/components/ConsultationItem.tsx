@@ -15,6 +15,7 @@ export default class ConsultationItem extends Component<Props, State> {
   };
 
   changeView(){
+    
     this.setState({
       showDetailedView : ! this.state.showDetailedView,
     })
