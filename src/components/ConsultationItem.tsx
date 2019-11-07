@@ -31,9 +31,9 @@ export default class ConsultationItem extends Component<Props, State> {
     this.setState({
       showDetailedView: !this.state.showDetailedView
     });
-    if (this.state.buttonText != this.state.showMore) {
+    if (this.state.buttonText !== this.state.showMore) {
       this.setState({ buttonText: this.state.showMore });
-    } else if (this.state.buttonText != this.state.showLess) {
+    } else if (this.state.buttonText !== this.state.showLess) {
       this.setState({ buttonText: this.state.showLess });
     }
   }
