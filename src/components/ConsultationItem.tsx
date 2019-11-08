@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
 import myContext from "./myContext";
 import axios from "axios";
-import { valueToNode } from "@babel/types";
 
 interface Props {
   consultation: ConsultationModel;

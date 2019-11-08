@@ -15,37 +15,23 @@ export default class ConsultationList extends Component<Props, State> {
     return (
       <myContext.Consumer>
         {value => {
-          if (this.props.allConsultations) {
-            return value.consultations.map(
-              (consultation: ConsultationModel) => (
-                <div className="container">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <ConsultationItem
-                        key={consultation.id}
-                        consultation={consultation}
-                      />
-                    </div>
+          const consultationsToRender = this.props.allConsultations
+            ? value.consultations
+            : value.userConsultations;
+          return consultationsToRender.map(
+            (consultation: ConsultationModel) => (
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <ConsultationItem
+                      key={consultation.id}
+                      consultation={consultation}
+                    />
                   </div>
                 </div>
-              )
-            );
-          } else {
-            return value.userConsultations.map(
-              (consultation: ConsultationModel) => (
-                <div className="container">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <ConsultationItem
-                        key={consultation.id}
-                        consultation={consultation}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )
-            );
-          }
+              </div>
+            )
+          );
         }}
       </myContext.Consumer>
     );
