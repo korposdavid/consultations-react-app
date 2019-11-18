@@ -18,12 +18,15 @@ export default class ConsultationItem extends Component<Props, State> {
   };
 
   userAlreadyJoined(id: number) {
-    for (const user of this.props.consultation.participants) {
-      if (user.id === id) {
-        return true;
-      }
-    }
-    return false;
+    return (
+      this.props.consultation.participants.filter(row => row.id === id) !== null
+    );
+    // for (const user of this.props.consultation.participants) {
+    //   if (user.id === id) {
+    //     return true;
+    //   }
+    // }
+    // return false;
   }
 
   handleJoin(
@@ -37,8 +40,8 @@ export default class ConsultationItem extends Component<Props, State> {
       method: "post",
       url: "http://localhost:8080/joinConsultation",
       data: {
-        userID: userID,
-        consultationID: consultationID
+        userID,
+        consultationID
       }
     });
     this.setState({ isJoined: true });
