@@ -48,6 +48,20 @@ export default class ConsultationItem extends Component<Props, State> {
     });
   }
 
+  handleDrop(
+    userID: number,
+    consultationID: number,
+    userConsulatations: ConsultationModel[]
+  ) {
+    this.setState({ isJoined: false });
+    userConsulatations = userConsulatations.filter(
+      row => row.id !== consultationID
+    );
+    this.props.consultation.participants = this.props.consultation.participants.filter(
+      participant => participant.id !== userID
+    );
+  }
+
   changeView() {
     this.setState({
       showDetailedView: !this.state.showDetailedView
@@ -119,7 +133,16 @@ export default class ConsultationItem extends Component<Props, State> {
                   >
                     Join
                   </button>
-                ) : null}
+                ) : (
+                  <button
+                    onClick={() =>
+                      this.handleDrop(value.id, id, value.userConsultations)
+                    }
+                    className="btn btn-danger m-2"
+                  >
+                    Drop
+                  </button>
+                )}
               </div>
             </button>
           );
