@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
 import myContext from "./myContext";
 import axios from "axios";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 interface Props {
   consultation: ConsultationModel;
@@ -51,16 +53,44 @@ export default class ConsultationItem extends Component<Props, State> {
   handleDrop(
     userID: number,
     consultationID: number,
-    userConsulatations: ConsultationModel[]
+    userConsultations: ConsultationModel[]
   ) {
     this.setState({ isJoined: false });
-    userConsulatations = userConsulatations.filter(
+    userConsultations = userConsultations.filter(
       row => row.id !== consultationID
     );
     this.props.consultation.participants = this.props.consultation.participants.filter(
       participant => participant.id !== userID
     );
   }
+
+  submit = (
+    userID: number,
+    consultationID: number,
+    userConsultations: ConsultationModel[]
+  ) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h1>Are you sure to drop the consultation?</h1>
+            <button className="btn btn-warning m-2" onClick={() => onClose()}>
+              Exit
+            </button>
+            <button
+              className="btn btn-danger m-2"
+              onClick={() => {
+                this.handleDrop(userID, consultationID, userConsultations);
+                onClose();
+              }}
+            >
+              Yes, Drop it!
+            </button>
+          </div>
+        );
+      }
+    });
+  };
 
   changeView() {
     this.setState({
@@ -136,7 +166,7 @@ export default class ConsultationItem extends Component<Props, State> {
                 ) : (
                   <button
                     onClick={() =>
-                      this.handleDrop(value.id, id, value.userConsultations)
+                      this.submit(value.id, id, value.userConsultations)
                     }
                     className="btn btn-danger m-2"
                   >
