@@ -19,14 +19,9 @@ export default class ConsultationItem extends Component<Props, State> {
 
   userAlreadyJoined(id: number) {
     return (
-      this.props.consultation.participants.filter(row => row.id === id) !== null
+      this.props.consultation.participants.filter(row => row.id === id).length >
+      0
     );
-    // for (const user of this.props.consultation.participants) {
-    //   if (user.id === id) {
-    //     return true;
-    //   }
-    // }
-    // return false;
   }
 
   handleJoin(
