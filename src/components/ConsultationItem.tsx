@@ -55,6 +55,14 @@ export default class ConsultationItem extends Component<Props, State> {
     consultationID: number,
     userConsultations: ConsultationModel[]
   ) {
+    axios({
+      method: "post",
+      url: "http://localhost:8080/dropConsultation",
+      data: {
+        userID,
+        consultationID
+      }
+    });
     this.setState({ isJoined: false });
     userConsultations = userConsultations.filter(
       row => row.id !== consultationID
