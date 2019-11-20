@@ -7,49 +7,107 @@ interface Props {
   userID: number;
 }
 
-export class NewConsultationForm extends Component<Props> {
-  handleSubmit(e: any, id: number) {
-    // const form = e.currentTarget;
-    console.log("form");
+interface State {
+  participantLimit: string;
+  duration: string;
+  year: string;
+  month: string;
+  day: string;
+  hour: string;
+  minute: string;
+  description: string;
+}
+
+export class NewConsultationForm extends Component<Props, State> {
+  state = {
+    participantLimit: "",
+    duration: "",
+    year: "",
+    month: "",
+    day: "",
+    hour: "",
+    minute: "",
+    description: ""
+  }
+  handleSubmit(id: number) {
+    console.log(this.state)
     axios({
       method: "post",
       url: "http://localhost:8080/createNewConsultation",
       data: {
         hostID: id,
-        participantLimit: 2,
-        duration: 30,
-        description: "apacuka fundaluka"
+        participantLimit: this.state.participantLimit,
+        duration: this.state.duration,
+        description: this.state.description
       }
     });
+  }
+
+  handleChange(e: React.ChangeEvent<HTMLInputElement>){
+    this.setState({ [e.target.name]: e.target.value } as Pick<State, any>)
   }
 
   render() {
     return (
       <div>
-        <Form
-          onSubmit={(event: any) => this.handleSubmit(event, this.props.userID)}
-        >
+        <Form onSubmit={() => this.handleSubmit(this.props.userID)}>
           <Form.Control
-            type="text"
-            name="participant"
+            type="number"
+            name="participantLimit"
+            onChange={this.handleChange.bind(this)}
             placeholder="Participant Limit"
           />
           <br />
-          <Form.Control type="number" name="duration" placeholder="Duration" />
+          <Form.Control
+            type="number"
+            name="duration"
+            onChange={this.handleChange.bind(this)}
+            placeholder="Duration"
+          />
           <br />
-          <Form.Control type="number" name="year" placeholder="year" />
+          <Form.Control
+            type="number"
+            name="year"
+            onChange={this.handleChange.bind(this)}
+            placeholder="year"
+          />
           <br />
-          <Form.Control type="number" name="month" placeholder="month" />
+          <Form.Control
+            type="number"
+            name="month"
+            onChange={this.handleChange.bind(this)}
+            placeholder="month"
+          />
           <br />
-          <Form.Control type="number" name="day" placeholder="day" />
+          <Form.Control
+            type="number"
+            name="day"
+            onChange={this.handleChange.bind(this)}
+            placeholder="day"
+          />
           <br />
-          <Form.Control type="number" name="hour" placeholder="hour" />
+          <Form.Control
+            type="number"
+            name="hour"
+            onChange={this.handleChange.bind(this)}
+            placeholder="hour"
+          />
           <br />
-          <Form.Control type="number" name="minute" placeholder="minute" />
+          <Form.Control
+            type="number"
+            name="minute"
+            onChange={this.handleChange.bind(this)}
+            placeholder="minute"
+          />
           <br />
           <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Example textarea</Form.Label>
-            <Form.Control as="textarea" rows="3" />
+            <Form.Control
+              as="textarea"
+              name="description"
+              onChange={this.handleChange.bind(this)}
+              placeholder="description"
+              rows="3"
+            />
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
