@@ -6,8 +6,10 @@ const myContext = createContext({
   level: "default",
   consultations: [],
   joinedConsultations: [],
+  hostedConsultations: [],
   refetchUserConsultations: () => {},
-  refetchAllConsultations: () => {}
+  refetchAllConsultations: () => {},
+  refetchHostedConsultations: () => {}
 });
 
 export default myContext;

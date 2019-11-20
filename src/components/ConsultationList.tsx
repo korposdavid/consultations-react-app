@@ -20,7 +20,7 @@ export default class ConsultationList extends Component<Props, State> {
               ? value.consultations
               : this.props.listType === listType.Joined
               ? value.joinedConsultations
-              : value.joinedConsultations;
+              : value.hostedConsultations;
           return consultationsToRender.map(
             (consultation: ConsultationModel) => (
               <div className="container">
@@ -41,7 +41,7 @@ export default class ConsultationList extends Component<Props, State> {
   }
 }
 
-export const enum listType {
+export enum listType {
   All,
   Joined,
   Hosted
