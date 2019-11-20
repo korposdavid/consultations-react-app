@@ -4,7 +4,7 @@ import ConsultationModel from "../models/ConsultationModel";
 import myContext from "./myContext";
 
 interface Props {
-  allConsultations: boolean;
+  listType: listType;
 }
 interface State {}
 
@@ -15,9 +15,12 @@ export default class ConsultationList extends Component<Props, State> {
     return (
       <myContext.Consumer>
         {value => {
-          const consultationsToRender = this.props.allConsultations
-            ? value.consultations
-            : value.userConsultations;
+          const consultationsToRender =
+            this.props.listType === listType.All
+              ? value.consultations
+              : this.props.listType === listType.Joined
+              ? value.joinedConsultations
+              : value.joinedConsultations;
           return consultationsToRender.map(
             (consultation: ConsultationModel) => (
               <div className="container">
@@ -36,4 +39,10 @@ export default class ConsultationList extends Component<Props, State> {
       </myContext.Consumer>
     );
   }
+}
+
+export const enum listType {
+  All,
+  Joined,
+  Hosted
 }

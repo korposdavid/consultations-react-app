@@ -15,9 +15,14 @@ export const Header: React.FC<Props> = () => {
       <myContext.Consumer>
         {value => {
           return (
-            <Link className={linkClass} to="/myConsultations">
-              {value.username}
-            </Link>
+            <div>
+              <Link className={linkClass} to="/joinedConsultations">
+                Joined Consultations
+              </Link>
+              <Link className={linkClass} to="/hostedConsultations">
+                Hosted Consultations
+              </Link>
+            </div>
           );
         }}
       </myContext.Consumer>

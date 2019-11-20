@@ -165,7 +165,7 @@ export default class ConsultationItem extends Component<Props, State> {
                       this.handleJoin(
                         value.id,
                         id,
-                        value.userConsultations,
+                        value.joinedConsultations,
                         value.level,
                         value.username
                       )

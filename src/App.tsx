@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { Header } from "./layout/Header";
 import axios from "axios";
-import ConsultationList from "./components/ConsultationList";
+import ConsultationList, { listType } from "./components/ConsultationList";
 import myContext from "./components/myContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -12,12 +12,12 @@ class App extends Component {
     id: 7,
     level: "WEB",
     consultations: [],
-    userConsultations: [],
+    joinedConsultations: [],
     refetchUserConsultations: () => {
       axios
       .get(`http://localhost:8080/myConsultations/${this.state.id}`)
       .then(response => {
-        this.setState({ userConsultations: response.data });
+        this.setState({ joinedConsultations: response.data });
       });
     },
     refetchAllConsultations: () => {
@@ -39,10 +39,13 @@ class App extends Component {
           <div className="App">
             <Header />
             <Route exact path="/">
-              <ConsultationList allConsultations={true} />
+              <ConsultationList listType={listType.All} />
             </Route>
-            <Route path="/myConsultations">
-              <ConsultationList allConsultations={false} />
+            <Route path="/joinedConsultations">
+              <ConsultationList listType={listType.Joined} />
+            </Route>
+            <Route path="/hostedConsultations">
+              <ConsultationList listType={listType.Hosted} />
             </Route>
           </div>
         </myContext.Provider>
