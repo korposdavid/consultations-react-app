@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import myContext from "../components/myContext";
+import Button from "react-bootstrap/Button";
 
 interface Props {}
 
@@ -22,6 +23,9 @@ export const Header: React.FC<Props> = () => {
               <Link className={linkClass} to="/hostedConsultations">
                 Hosted Consultations
               </Link>
+              <Button onClick={() => value.newConsultationForm()}>
+                New Consultation
+              </Button>
             </div>
           );
         }}

@@ -5,6 +5,8 @@ import axios from "axios";
 import ConsultationList, { listType } from "./components/ConsultationList";
 import myContext from "./components/myContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import NewConsultationForm from "./components/NewConsultationForm";
+import { confirmAlert } from "react-confirm-alert";
 
 class App extends Component {
   state = {
@@ -16,10 +18,10 @@ class App extends Component {
     hostedConsultations: [],
     refetchUserConsultations: () => {
       axios
-      .get(`http://localhost:8080/myJoinedConsultations/${this.state.id}`)
-      .then(response => {
-        this.setState({ joinedConsultations: response.data });
-      });
+        .get(`http://localhost:8080/myJoinedConsultations/${this.state.id}`)
+        .then(response => {
+          this.setState({ joinedConsultations: response.data });
+        });
     },
     refetchAllConsultations: () => {
       axios.get("http://localhost:8080/consultations").then(response => {
@@ -27,8 +29,30 @@ class App extends Component {
       });
     },
     refetchHostedConsultations: () => {
-      axios.get(`http://localhost:8080/myHostedConsultations/${this.state.id}`).then(response => {
-        this.setState({ hostedConsultations: response.data });
+      axios
+        .get(`http://localhost:8080/myHostedConsultations/${this.state.id}`)
+        .then(response => {
+          this.setState({ hostedConsultations: response.data });
+        });
+    },
+    newConsultationForm: () => {
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <div
+              className="custom-ui"
+              style={{
+                background: "rgba(250,250,250,1)",
+                padding: "10px",
+                border: "1px solid black",
+                borderRadius: "0.25rem",
+                opacity: "0.9"
+              }}
+            >
+              <NewConsultationForm userID={this.state.id}></NewConsultationForm>
+            </div>
+          );
+        }
       });
     }
   };
