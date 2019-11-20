@@ -12,18 +12,24 @@ class App extends Component {
     id: 7,
     level: "WEB",
     consultations: [],
-    userConsultations: []
-  };
-
-  componentDidMount() {
-    axios.get("http://localhost:8080/consultations").then(response => {
-      this.setState({ consultations: response.data });
-    });
-    axios
+    userConsultations: [],
+    refetchUserConsultations: () => {
+      axios
       .get(`http://localhost:8080/myConsultations/${this.state.id}`)
       .then(response => {
         this.setState({ userConsultations: response.data });
       });
+    },
+    refetchAllConsultations: () => {
+      axios.get("http://localhost:8080/consultations").then(response => {
+        this.setState({ consultations: response.data });
+      });
+    }
+  };
+
+  componentDidMount() {
+    this.state.refetchAllConsultations();
+    this.state.refetchUserConsultations();
   }
 
   render() {
