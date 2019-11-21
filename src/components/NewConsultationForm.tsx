@@ -53,6 +53,25 @@ export class NewConsultationForm extends Component<Props, State> {
     }
   }
 
+  getMinDate() {
+    let today = new Date();
+    today.setDate(today.getDate() + 1);
+    let day = today.getDate(),
+      month = today.getMonth() + 1,
+      year = today.getFullYear();
+    const returnDate =
+      "" +
+      year +
+      "-" +
+      (month < 10 ? "0" : "") +
+      month +
+      "-" +
+      (day < 10 ? "0" : "") +
+      day +
+      "T08:00";
+    return returnDate;
+  }
+
   subjectCheckList() {
     return this.props.subjects.map(subject => (
       <Form.Check
@@ -66,6 +85,8 @@ export class NewConsultationForm extends Component<Props, State> {
   }
 
   render() {
+    const time = this.getMinDate();
+    console.log(time);
     return (
       <div>
         <Form onSubmit={() => this.handleSubmit(this.props.userID)}>
@@ -92,6 +113,7 @@ export class NewConsultationForm extends Component<Props, State> {
           <Form.Control
             type="datetime-local"
             name="date"
+            min={time}
             onChange={this.handleChange.bind(this)}
           />
           <br />
