@@ -150,9 +150,8 @@ export default class ConsultationItem extends Component<Props, State> {
             <button className="list-group-item clearfix btn-block m-2">
               <div>
                 <h4 className="list-group-item-header">{date}</h4>
-                <p className="list-group-item-text">
-                  Subjects: {subjects.join(", ")}
-                </p>
+                 {subjects.length > 0 ? <p className="list-group-item-text">
+                  Subjects: {subjects.join(", ")} </p>: ""}
                 <p className="list-group-item-text">
                   Host: {username + " " + level}
                 </p>
@@ -161,7 +160,9 @@ export default class ConsultationItem extends Component<Props, State> {
                 </p>
                 {this.state.showDetailedView ? (
                   <div>
-                    <p className="list-group-item-text">Duration: {duration}</p>
+                    <p className="list-group-item-text">
+                      Duration: {duration} minutes
+                    </p>
                     <p className="list-group-item-text">
                       Description: {description}
                     </p>
@@ -192,7 +193,12 @@ export default class ConsultationItem extends Component<Props, State> {
                 ) : (
                   <button
                     onClick={() =>
-                      this.submit(value.id, id, value.refetchUserConsultations, value.refetchAllConsultations)
+                      this.submit(
+                        value.id,
+                        id,
+                        value.refetchUserConsultations,
+                        value.refetchAllConsultations
+                      )
                     }
                     className="btn btn-danger m-2"
                   >
