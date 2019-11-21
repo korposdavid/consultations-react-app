@@ -53,7 +53,8 @@ export default class ConsultationItem extends Component<Props, State> {
   handleDrop(
     userID: number,
     consultationID: number,
-    refetchUserConsultations: Function
+    refetchUserConsultations: Function,
+    refetchAllConsultations: Function
   ) {
     axios({
       method: "post",
@@ -64,6 +65,7 @@ export default class ConsultationItem extends Component<Props, State> {
       }
     }).then(response => {
       refetchUserConsultations();
+      refetchAllConsultations();
     });
     this.setState({ isJoined: false });
     this.props.consultation.participants = this.props.consultation.participants.filter(
@@ -74,7 +76,8 @@ export default class ConsultationItem extends Component<Props, State> {
   submit = (
     userID: number,
     consultationID: number,
-    refetchUserConsultations: Function
+    refetchUserConsultations: Function,
+    refetchAllConsultations: Function
   ) => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -90,7 +93,8 @@ export default class ConsultationItem extends Component<Props, State> {
                 this.handleDrop(
                   userID,
                   consultationID,
-                  refetchUserConsultations
+                  refetchUserConsultations,
+                  refetchAllConsultations
                 );
                 onClose();
               }}
@@ -188,7 +192,7 @@ export default class ConsultationItem extends Component<Props, State> {
                 ) : (
                   <button
                     onClick={() =>
-                      this.submit(value.id, id, value.refetchUserConsultations)
+                      this.submit(value.id, id, value.refetchUserConsultations, value.refetchAllConsultations)
                     }
                     className="btn btn-danger m-2"
                   >
