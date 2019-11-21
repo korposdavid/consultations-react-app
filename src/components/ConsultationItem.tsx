@@ -153,9 +153,8 @@ export default class ConsultationItem extends Component<Props, State> {
             >
               <div>
                 <h4 className="list-group-item-header">{date}</h4>
-                <p className="list-group-item-text">
-                  Subjects: {subjects.join(", ")}
-                </p>
+                 {subjects.length > 0 ? <p className="list-group-item-text">
+                  Subjects: {subjects.join(", ")} </p>: ""}
                 <p className="list-group-item-text">
                   Host: {username + " " + level}
                 </p>
@@ -164,7 +163,9 @@ export default class ConsultationItem extends Component<Props, State> {
                 </p>
                 {this.state.showDetailedView ? (
                   <div>
-                    <p className="list-group-item-text">Duration: {duration}</p>
+                    <p className="list-group-item-text">
+                      Duration: {duration} minutes
+                    </p>
                     <p className="list-group-item-text">
                       Description: {description}
                     </p>
