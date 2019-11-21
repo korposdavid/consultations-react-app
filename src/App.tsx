@@ -39,16 +39,7 @@ class App extends Component {
       confirmAlert({
         customUI: ({ onClose }) => {
           return (
-            <div
-              className="custom-ui"
-              style={{
-                background: "rgba(250,250,250,1)",
-                padding: "10px",
-                border: "1px solid black",
-                borderRadius: "0.25rem",
-                opacity: "0.9"
-              }}
-            >
+            <div className="custom-ui" style={formStyle}>
               <NewConsultationForm userID={this.state.id}></NewConsultationForm>
             </div>
           );
@@ -84,5 +75,13 @@ class App extends Component {
     );
   }
 }
+
+const formStyle = {
+  background: "rgba(250,250,250,1)",
+  padding: "20px",
+  border: "1px solid black",
+  borderRadius: "0.25rem",
+  opacity: "0.9"
+};
 
 export default App;

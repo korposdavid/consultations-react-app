@@ -23,7 +23,10 @@ export const Header: React.FC<Props> = () => {
               <Link className={linkClass} to="/hostedConsultations">
                 Hosted Consultations
               </Link>
-              <Button onClick={() => value.newConsultationForm()}>
+              <Button
+                variant="outline-success"
+                onClick={() => value.newConsultationForm()}
+              >
                 New Consultation
               </Button>
             </div>

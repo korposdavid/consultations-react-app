@@ -192,7 +192,12 @@ export default class ConsultationItem extends Component<Props, State> {
                 ) : (
                   <button
                     onClick={() =>
-                      this.submit(value.id, id, value.refetchUserConsultations, value.refetchAllConsultations)
+                      this.submit(
+                        value.id,
+                        id,
+                        value.refetchUserConsultations,
+                        value.refetchAllConsultations
+                      )
                     }
                     className="btn btn-danger m-2"
                   >
