@@ -49,18 +49,28 @@ class App extends Component {
                 opacity: "0.9"
               }}
             >
-              <NewConsultationForm userID={this.state.id}></NewConsultationForm>
+              <NewConsultationForm
+                userID={this.state.id}
+                subjects={this.state.subjects}
+              ></NewConsultationForm>
             </div>
           );
         }
       });
-    }
+    },
+    fetchSubjects: () => {
+      axios.get("http://localhost:8080/subjects").then(response => {
+        this.setState({ subjects: response.data});
+      });
+    },
+    subjects: []
   };
 
   componentDidMount() {
     this.state.refetchAllConsultations();
     this.state.refetchUserConsultations();
     this.state.refetchHostedConsultations();
+    this.state.fetchSubjects();
   }
 
   render() {

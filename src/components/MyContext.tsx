@@ -10,7 +10,9 @@ const MyContext = createContext({
   refetchUserConsultations: () => {},
   refetchAllConsultations: () => {},
   refetchHostedConsultations: () => {},
-  newConsultationForm: () => {}
+  newConsultationForm: () => {},
+  fetchSubjects: () => {},
+  subjects: []
 });
 
 export default MyContext;

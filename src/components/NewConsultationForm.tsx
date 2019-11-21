@@ -5,6 +5,7 @@ import axios from "axios";
 
 interface Props {
   userID: number;
+  subjects: string[];
 }
 
 interface State {
@@ -16,10 +17,11 @@ interface State {
   hour: string;
   minute: string;
   description: string;
+  subjects: string[];
 }
 
 export class NewConsultationForm extends Component<Props, State> {
-  state = {
+  state: State = {
     participantLimit: "",
     duration: "",
     year: "",
@@ -27,8 +29,9 @@ export class NewConsultationForm extends Component<Props, State> {
     day: "",
     hour: "",
     minute: "",
-    description: ""
-  }
+    description: "",
+    subjects: []
+  };
   handleSubmit(id: number) {
     axios({
       method: "post",
@@ -42,13 +45,36 @@ export class NewConsultationForm extends Component<Props, State> {
         month: this.state.month,
         day: this.state.day,
         hour: this.state.hour,
-        minute: this.state.minute
+        minute: this.state.minute,
+        subjects: this.state.subjects
       }
     });
   }
 
-  handleChange(e: React.ChangeEvent<HTMLInputElement>){
-    this.setState({ [e.target.name]: e.target.value } as Pick<State, any>)
+  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ [e.target.name]: e.target.value } as Pick<State, any>);
+  }
+
+  handleSubjectChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      this.state.subjects.push(e.target.name);
+    } else {
+      this.state.subjects = this.state.subjects.filter(
+        subject => subject !== e.target.name
+      );
+    }
+  }
+
+  subjectCheckList() {
+    return this.props.subjects.map(subject => (
+      <Form.Check
+        inline
+        label={subject}
+        name={subject}
+        type="checkbox"
+        onChange={this.handleSubjectChange.bind(this)}
+      />
+    ));
   }
 
   render() {
@@ -103,6 +129,8 @@ export class NewConsultationForm extends Component<Props, State> {
             onChange={this.handleChange.bind(this)}
             placeholder="minute"
           />
+          <br />
+          {this.subjectCheckList()}
           <br />
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Control
