@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
-import myContext from "./myContext";
+import MyContext from "./MyContext";
 import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -141,7 +141,7 @@ export default class ConsultationItem extends Component<Props, State> {
       .join(", ");
 
     return (
-      <myContext.Consumer>
+      <MyContext.Consumer>
         {value => {
           return (
             <button className="list-group-item clearfix btn-block m-2">
@@ -200,7 +200,7 @@ export default class ConsultationItem extends Component<Props, State> {
             </button>
           );
         }}
-      </myContext.Consumer>
+      </MyContext.Consumer>
     );
   }
 }

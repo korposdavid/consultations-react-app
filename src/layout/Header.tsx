@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import myContext from "../components/myContext";
+import MyContext from "../components/MyContext";
 import Button from "react-bootstrap/Button";
 
 interface Props {}
 
 export const Header: React.FC<Props> = () => {
   return (
-    <myContext.Consumer>
+    <MyContext.Consumer>
       {value => {
         return (
           <header style={headerStyle}>
@@ -30,7 +30,7 @@ export const Header: React.FC<Props> = () => {
           </header>
         );
       }}
-    </myContext.Consumer>
+    </MyContext.Consumer>
   );
 };
 

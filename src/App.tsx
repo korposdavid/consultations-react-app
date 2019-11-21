@@ -3,7 +3,7 @@ import "./App.css";
 import { Header } from "./layout/Header";
 import axios from "axios";
 import ConsultationList, { listType } from "./components/ConsultationList";
-import myContext from "./components/myContext";
+import MyContext from "./components/MyContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
@@ -66,7 +66,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <myContext.Provider value={{ ...this.state }}>
+        <MyContext.Provider value={{ ...this.state }}>
           <div className="App">
             <Header />
             <Route exact path="/">
@@ -79,7 +79,7 @@ class App extends Component {
               <ConsultationList listType={listType.Hosted} />
             </Route>
           </div>
-        </myContext.Provider>
+        </MyContext.Provider>
       </Router>
     );
   }

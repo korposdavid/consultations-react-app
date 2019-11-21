@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-const myContext = createContext({
+const MyContext = createContext({
   username: "default",
   id: 0,
   level: "default",
@@ -13,4 +13,4 @@ const myContext = createContext({
   newConsultationForm: () => {}
 });
 
-export default myContext;
+export default MyContext;

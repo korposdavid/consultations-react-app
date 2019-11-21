@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ConsultationItem from "./ConsultationItem";
 import ConsultationModel from "../models/ConsultationModel";
-import myContext from "./myContext";
+import MyContext from "./MyContext";
 
 interface Props {
   listType: listType;
@@ -13,7 +13,7 @@ export default class ConsultationList extends Component<Props, State> {
 
   render() {
     return (
-      <myContext.Consumer>
+      <MyContext.Consumer>
         {value => {
           const consultationsToRender =
             this.props.listType === listType.All
@@ -36,7 +36,7 @@ export default class ConsultationList extends Component<Props, State> {
             )
           );
         }}
-      </myContext.Consumer>
+      </MyContext.Consumer>
     );
   }
 }
