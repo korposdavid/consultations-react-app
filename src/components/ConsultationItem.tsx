@@ -4,7 +4,6 @@ import MyContext from "./MyContext";
 import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { truncateSync } from "fs";
 
 interface Props {
   consultation: ConsultationModel;
