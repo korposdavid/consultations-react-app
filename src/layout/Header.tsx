@@ -7,16 +7,16 @@ interface Props {}
 
 export const Header: React.FC<Props> = () => {
   return (
-    <header style={headerStyle}>
-      <h1>Coolzontations</h1>
-      <Link className={linkClass} to="/">
-        {" "}
-        Home{" "}
-      </Link>
-      <myContext.Consumer>
-        {value => {
-          return (
+    <myContext.Consumer>
+      {value => {
+        return (
+          <header style={headerStyle}>
             <div>
+              <h1>Coolzontations</h1>
+              <Link className={linkClass} to="/">
+                {" "}
+                Home{" "}
+              </Link>
               <Link className={linkClass} to="/joinedConsultations">
                 Joined Consultations
               </Link>
@@ -27,10 +27,10 @@ export const Header: React.FC<Props> = () => {
                 New Consultation
               </Button>
             </div>
-          );
-        }}
-      </myContext.Consumer>
-    </header>
+          </header>
+        );
+      }}
+    </myContext.Consumer>
   );
 };
 
