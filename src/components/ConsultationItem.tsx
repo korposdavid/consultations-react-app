@@ -147,7 +147,10 @@ export default class ConsultationItem extends Component<Props, State> {
       <MyContext.Consumer>
         {value => {
           return (
-            <button className="list-group-item clearfix btn-block m-2">
+            <button
+              className="list-group-item clearfix btn-block m-2"
+              style={bodyStyle}
+            >
               <div>
                 <h4 className="list-group-item-header">{date}</h4>
                 <p className="list-group-item-text">
@@ -212,3 +215,9 @@ export default class ConsultationItem extends Component<Props, State> {
     );
   }
 }
+
+const bodyStyle = {
+  opacity: "0.98",
+  borderRadius: "0.25rem",
+  border: "1px solid black"
+};

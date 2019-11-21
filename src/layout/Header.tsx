@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MyContext from "../components/MyContext";
 import Button from "react-bootstrap/Button";
+import "../App.css";
 
 interface Props {}
 
@@ -10,7 +11,7 @@ export const Header: React.FC<Props> = () => {
     <MyContext.Consumer>
       {value => {
         return (
-          <header style={headerStyle}>
+          <header className="headerStyle">
             <div>
               <h1>Coolzontations</h1>
               <Link className={linkClass} to="/">
@@ -38,9 +39,3 @@ export const Header: React.FC<Props> = () => {
 };
 
 const linkClass = "btn btn-outline-success m-2";
-
-const headerStyle = {
-  background: "#333",
-  color: "#fff",
-  padding: "10px"
-};
