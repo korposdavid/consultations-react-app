@@ -30,7 +30,6 @@ export class NewConsultationForm extends Component<Props, State> {
     description: ""
   }
   handleSubmit(id: number) {
-    console.log(this.state)
     axios({
       method: "post",
       url: "http://localhost:8080/createNewConsultation",
@@ -38,7 +37,12 @@ export class NewConsultationForm extends Component<Props, State> {
         hostID: id,
         participantLimit: this.state.participantLimit,
         duration: this.state.duration,
-        description: this.state.description
+        description: this.state.description,
+        year: this.state.year,
+        month: this.state.month,
+        day: this.state.day,
+        hour: this.state.hour,
+        minute: this.state.minute
       }
     });
   }
