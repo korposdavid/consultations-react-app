@@ -4,6 +4,7 @@ import myContext from "./myContext";
 import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { truncateSync } from "fs";
 
 interface Props {
   consultation: ConsultationModel;
@@ -114,6 +115,16 @@ export default class ConsultationItem extends Component<Props, State> {
     }
   }
 
+  isJoinDisabled(userID: number) {
+    if (this.props.consultation.host.id === userID) {
+      return true;
+    }
+    return !(
+      this.props.consultation.participantLimit >
+      this.props.consultation.participants.length
+    );
+  }
+
   render() {
     const {
       date,
@@ -143,7 +154,7 @@ export default class ConsultationItem extends Component<Props, State> {
                   Host: {username + " " + level}
                 </p>
                 <p className="list-group-item-text">
-                  Participants: {participants}{" "}
+                  Participants({participantLimit}): {participants}{" "}
                 </p>
                 {this.state.showDetailedView ? (
                   <div>
@@ -161,6 +172,7 @@ export default class ConsultationItem extends Component<Props, State> {
                 </button>
                 {!this.userAlreadyJoined(value.id) ? (
                   <button
+                    disabled={this.isJoinDisabled(value.id)}
                     onClick={() =>
                       this.handleJoin(
                         value.id,
