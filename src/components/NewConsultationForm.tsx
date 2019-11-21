@@ -86,6 +86,9 @@ export class NewConsultationForm extends Component<Props, State> {
             name="participantLimit"
             onChange={this.handleChange.bind(this)}
             placeholder="Participant Limit"
+            min="1"
+            max="100"
+            required
           />
           <br />
           <Form.Control
@@ -93,6 +96,9 @@ export class NewConsultationForm extends Component<Props, State> {
             name="duration"
             onChange={this.handleChange.bind(this)}
             placeholder="Duration"
+            required
+            min="15"
+            max="180"
           />
           <br />
           <Form.Control
@@ -139,6 +145,7 @@ export class NewConsultationForm extends Component<Props, State> {
               onChange={this.handleChange.bind(this)}
               placeholder="description"
               rows="3"
+              required
             />
           </Form.Group>
           <Button variant="primary" type="submit">
