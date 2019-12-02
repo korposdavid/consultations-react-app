@@ -40,14 +40,16 @@ export default class ConsultationItem extends Component<Props, State> {
         userID,
         consultationID
       }
-    });
-    this.setState({ isJoined: true });
-    userConsulatations.push(this.props.consultation);
-    this.props.consultation.participants.push({
-      username: userName,
-      id: userID,
-      level: userLevel
-    });
+    }).then(response => {
+      this.setState({ isJoined: true });
+      userConsulatations.push(this.props.consultation);
+      this.props.consultation.participants.push({
+        username: userName,
+        id: userID,
+        level: userLevel
+      });
+    }
+    );
   }
 
   handleDrop(
@@ -66,11 +68,11 @@ export default class ConsultationItem extends Component<Props, State> {
     }).then(response => {
       refetchUserConsultations();
       refetchAllConsultations();
+      this.setState({ isJoined: false });
+      this.props.consultation.participants = this.props.consultation.participants.filter(
+        participant => participant.id !== userID
+      );
     });
-    this.setState({ isJoined: false });
-    this.props.consultation.participants = this.props.consultation.participants.filter(
-      participant => participant.id !== userID
-    );
   }
 
   submit = (
