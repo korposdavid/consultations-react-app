@@ -43,7 +43,7 @@ export class NewConsultationForm extends Component<Props, State> {
     this.setState({ [e.target.name]: e.target.value } as Pick<State, any>);
   }
 
-  handleSubjectChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleSubjectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       this.state.subjects.push(e.target.name);
     } else {
@@ -79,7 +79,7 @@ export class NewConsultationForm extends Component<Props, State> {
         label={subject}
         name={subject}
         type="checkbox"
-        onChange={this.handleSubjectChange.bind(this)}
+        onChange={this.handleSubjectChange}
       />
     ));
   }
