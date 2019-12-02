@@ -47,11 +47,17 @@ export class NewConsultationForm extends Component<Props, State> {
     if (e.target.checked) {
       this.state.subjects.push(e.target.name);
     } else {
+      this.setState({
+        subjects: this.state.subjects.filter(
+          subject => subject !== e.target.name)
+      })
+      /* TODO: commented part is old, setState is better
+      
       this.state.subjects = this.state.subjects.filter(
         subject => subject !== e.target.name
-      );
+      );*/
     }
-  }
+  };
 
   getMinDate() {
     let today = new Date();
