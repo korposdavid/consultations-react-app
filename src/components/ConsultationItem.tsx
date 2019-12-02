@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import ConsultationModel from "../models/ConsultationModel";
 import MyContext from "./MyContext";
-import axios from "axios";
-import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { ConsultationButton } from "./ConsultationButton";
 
 interface Props {
   consultation: ConsultationModel;
@@ -26,89 +25,6 @@ export default class ConsultationItem extends Component<Props, State> {
     );
   }
 
-  handleJoin(
-    userID: number,
-    consultationID: number,
-    userConsulatations: ConsultationModel[],
-    userLevel: string,
-    userName: string
-  ) {
-    axios({
-      method: "post",
-      url: "http://localhost:8080/joinConsultation",
-      data: {
-        userID,
-        consultationID
-      }
-    }).then(response => {
-      this.setState({ isJoined: true });
-      userConsulatations.push(this.props.consultation);
-      this.props.consultation.participants.push({
-        username: userName,
-        id: userID,
-        level: userLevel
-      });
-    }
-    );
-  }
-
-  handleDrop(
-    userID: number,
-    consultationID: number,
-    refetchUserConsultations: Function,
-    refetchAllConsultations: Function
-  ) {
-    axios({
-      method: "post",
-      url: "http://localhost:8080/dropConsultation",
-      data: {
-        userID,
-        consultationID
-      }
-    }).then(response => {
-      refetchUserConsultations();
-      refetchAllConsultations();
-      this.setState({ isJoined: false });
-      this.props.consultation.participants = this.props.consultation.participants.filter(
-        participant => participant.id !== userID
-      );
-    });
-  }
-
-  submit = (
-    userID: number,
-    consultationID: number,
-    refetchUserConsultations: Function,
-    refetchAllConsultations: Function
-  ) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className="custom-ui">
-            <h1>Are you sure to drop the consultation?</h1>
-            <button className="btn btn-warning m-2" onClick={() => onClose()}>
-              Exit
-            </button>
-            <button
-              className="btn btn-danger m-2"
-              onClick={() => {
-                this.handleDrop(
-                  userID,
-                  consultationID,
-                  refetchUserConsultations,
-                  refetchAllConsultations
-                );
-                onClose();
-              }}
-            >
-              Yes, Drop it!
-            </button>
-          </div>
-        );
-      }
-    });
-  };
-
   changeView() {
     this.setState({
       showDetailedView: !this.state.showDetailedView
@@ -118,16 +34,6 @@ export default class ConsultationItem extends Component<Props, State> {
     } else if (this.state.buttonText !== this.state.showLess) {
       this.setState({ buttonText: this.state.showLess });
     }
-  }
-
-  isJoinDisabled(userID: number) {
-    if (this.props.consultation.host.id === userID) {
-      return true;
-    }
-    return !(
-      this.props.consultation.participantLimit >
-      this.props.consultation.participants.length
-    );
   }
 
   render() {
@@ -155,8 +61,13 @@ export default class ConsultationItem extends Component<Props, State> {
             >
               <div>
                 <h4 className="list-group-item-header">{date}</h4>
-                 {subjects.length > 0 ? <p className="list-group-item-text">
-                  Subjects: {subjects.join(", ")} </p>: ""}
+                {subjects.length > 0 ? (
+                  <p className="list-group-item-text">
+                    Subjects: {subjects.join(", ")}{" "}
+                  </p>
+                ) : (
+                  ""
+                )}
                 <p className="list-group-item-text">
                   Host: {username + " " + level}
                 </p>
@@ -179,37 +90,18 @@ export default class ConsultationItem extends Component<Props, State> {
                 >
                   {this.state.buttonText}
                 </button>
-                {!this.userAlreadyJoined(value.id) ? (
-                  <button
-                    disabled={this.isJoinDisabled(value.id)}
-                    onClick={() =>
-                      this.handleJoin(
-                        value.id,
-                        id,
-                        value.joinedConsultations,
-                        value.level,
-                        value.username
-                      )
-                    }
-                    className="btn btn-success m-2"
-                  >
-                    Join
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      this.submit(
-                        value.id,
-                        id,
-                        value.refetchUserConsultations,
-                        value.refetchAllConsultations
-                      )
-                    }
-                    className="btn btn-danger m-2"
-                  >
-                    Drop
-                  </button>
-                )}
+                <ConsultationButton
+                  consultation={this.props.consultation}
+                  userID={value.id}
+                  consultationID={id}
+                  refetchUserConsultations={value.refetchUserConsultations}
+                  refetchAllConsultations={value.refetchAllConsultations}
+                  refetchHostedConsultations={value.refetchHostedConsultations}
+                  joinedConsultations={value.joinedConsultations}
+                  userLevel={value.level}
+                  userName={value.username}
+                  userAlreadyJoined={this.userAlreadyJoined(value.id)}
+                ></ConsultationButton>
               </div>
             </button>
           );
