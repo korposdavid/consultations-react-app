@@ -76,22 +76,17 @@ export const ConsultationButton: React.FC<Props> = props => {
       }
     });
   }
-
-  if (!props.userAlreadyJoined) {
-    return (
-      <button
-        disabled={isJoinDisabled()}
-        onClick={handleJoin}
-        className="btn btn-success m-2"
-      >
-        Join
-      </button>
-    );
-  } else {
-    return (
-      <button onClick={submitDrop} className="btn btn-danger m-2">
-        Drop
-      </button>
-    );
-  }
+  return !props.userAlreadyJoined ? (
+    <button
+      disabled={isJoinDisabled()}
+      onClick={handleJoin}
+      className="btn btn-success m-2"
+    >
+      Join
+    </button>
+  ) : (
+    <button onClick={submitDrop} className="btn btn-danger m-2">
+      Drop
+    </button>
+  );
 };
