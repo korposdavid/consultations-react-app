@@ -51,11 +51,6 @@ export class NewConsultationForm extends Component<Props, State> {
         subjects: this.state.subjects.filter(
           subject => subject !== e.target.name)
       })
-      /* TODO: commented part is old, setState is better
-      
-      this.state.subjects = this.state.subjects.filter(
-        subject => subject !== e.target.name
-      );*/
     }
   };
 
