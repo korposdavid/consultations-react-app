@@ -39,7 +39,7 @@ export class NewConsultationForm extends Component<Props, State> {
     });
   }
 
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ [e.target.name]: e.target.value } as Pick<State, any>);
   }
 
@@ -87,14 +87,13 @@ export class NewConsultationForm extends Component<Props, State> {
 
   render() {
     const time = this.getMinDate();
-    console.log(time);
     return (
       <div>
         <Form onSubmit={() => this.handleSubmit(this.props.userID)}>
           <Form.Control
             type="number"
             name="participantLimit"
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             placeholder="Participant Limit"
             min="1"
             max="100"
@@ -104,7 +103,7 @@ export class NewConsultationForm extends Component<Props, State> {
           <Form.Control
             type="number"
             name="duration"
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             placeholder="Duration"
             required
             min="15"
@@ -115,7 +114,7 @@ export class NewConsultationForm extends Component<Props, State> {
             type="datetime-local"
             name="date"
             min={time}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
           />
           <br />
           {this.subjectCheckList()}
@@ -124,7 +123,7 @@ export class NewConsultationForm extends Component<Props, State> {
             <Form.Control
               as="textarea"
               name="description"
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
               placeholder="description"
               rows="3"
               required
