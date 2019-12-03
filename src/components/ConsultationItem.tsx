@@ -98,8 +98,6 @@ export default class ConsultationItem extends Component<Props, State> {
                   refetchAllConsultations={value.refetchAllConsultations}
                   refetchHostedConsultations={value.refetchHostedConsultations}
                   joinedConsultations={value.joinedConsultations}
-                  userLevel={value.level}
-                  userName={value.username}
                   userAlreadyJoined={this.userAlreadyJoined(value.id)}
                 ></ConsultationButton>
               </div>

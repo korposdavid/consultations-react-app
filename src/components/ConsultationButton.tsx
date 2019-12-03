@@ -10,8 +10,6 @@ interface Props {
   refetchAllConsultations: Function;
   refetchHostedConsultations: Function;
   joinedConsultations: ConsultationModel[];
-  userLevel: string;
-  userName: string;
   userAlreadyJoined: boolean;
   consultation: ConsultationModel;
 }
