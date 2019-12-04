@@ -30,10 +30,10 @@ export class LoginForm extends Component<Props, State> {
         password: this.state.password
       }
     }).then(response => {
-      //TODO: save logged in user's token
       const responseToken: string = response.data.token;
       const user: UserModel = response.data.user;
       this.props.setUser(user);
+      localStorage.setItem('token', responseToken);
     });
   };
 
