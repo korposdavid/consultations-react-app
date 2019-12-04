@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Col from "react-bootstrap/Col";
 import MyContext from "../components/MyContext";
-import Button from "react-bootstrap/Button";
+import LoginForm from "../components/LoginForm";
+import { LoggedInHeaderPart } from "../layout/LoggedInHeaderPart";
 import "../App.css";
 
 interface Props {}
@@ -13,23 +14,18 @@ export const Header: React.FC<Props> = () => {
         return (
           <header className="headerStyle">
             <div>
-              <h1>Coolzontations</h1>
-              <Link className={linkClass} to="/">
-                {" "}
-                Home{" "}
-              </Link>
-              <Link className={linkClass} to="/joinedConsultations">
-                Joined Consultations
-              </Link>
-              <Link className={linkClass} to="/hostedConsultations">
-                Hosted Consultations
-              </Link>
-              <Button
-                variant="outline-success"
-                onClick={() => value.newConsultationForm()}
-              >
-                New Consultation
-              </Button>
+              <Col>
+                <h1>Coolzontations</h1>
+              </Col>
+              <Col>
+                {!value.username ? (
+                  <LoggedInHeaderPart
+                    newConsultationForm={value.newConsultationForm}
+                  ></LoggedInHeaderPart>
+                ) : (
+                  <LoginForm username={value.username}></LoginForm>
+                )}
+              </Col>
             </div>
           </header>
         );
@@ -37,5 +33,3 @@ export const Header: React.FC<Props> = () => {
     </MyContext.Consumer>
   );
 };
-
-const linkClass = "btn btn-outline-success m-2";
