@@ -34,7 +34,9 @@ export class LoginForm extends Component<Props, State> {
       const user: UserModel = response.data.user;
       this.props.setUser(user);
       localStorage.setItem('token', responseToken);
-    });
+    }).catch(() => {
+      alert('Your username or password was wrong.');
+    })
   };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
