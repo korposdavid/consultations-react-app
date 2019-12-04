@@ -18,12 +18,12 @@ export const Header: React.FC<Props> = () => {
                 <h1>Coolzontations</h1>
               </Col>
               <Col>
-                {!value.username ? (
+                {value.user.id !== 0 ? (
                   <LoggedInHeaderPart
                     newConsultationForm={value.newConsultationForm}
                   ></LoggedInHeaderPart>
                 ) : (
-                  <LoginForm username={value.username}></LoginForm>
+                  <LoginForm setUser={value.setUser}></LoginForm>
                 )}
               </Col>
             </div>

@@ -9,18 +9,34 @@ import PrivateRoute from './components/PrivateRoute'
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
 import LoginForm from "./components/LoginForm";
+import UserModel from "./models/UserModel"
+import ConsultationModel from "./models/ConsultationModel"
 
-class App extends Component {
-  state = {
-    username: "user",
-    id: 5,
-    level: "ADVANCE",
+interface Props {}
+
+interface State {
+  user: UserModel;
+  consultations: ConsultationModel[];
+  joinedConsultations: ConsultationModel[];
+  hostedConsultations: ConsultationModel[];
+  refetchUserConsultations: () => void;
+  refetchAllConsultations: () => void;
+  refetchHostedConsultations: () => void;
+  newConsultationForm: () => void;
+  fetchSubjects: () => void;
+  setUser: (user: UserModel) => void;
+  subjects: string[]
+}
+
+class App extends Component<Props, State> {
+  state: State = {
+    user: {username: '', level: '', id: 0},
     consultations: [],
     joinedConsultations: [],
     hostedConsultations: [],
     refetchUserConsultations: () => {
       axios
-        .get(`http://localhost:8080/myJoinedConsultations/${this.state.id}`)
+        .get(`http://localhost:8080/myJoinedConsultations/${this.state.user.id}`)
         .then(response => {
           this.setState({ joinedConsultations: response.data });
         });
@@ -32,7 +48,7 @@ class App extends Component {
     },
     refetchHostedConsultations: () => {
       axios
-        .get(`http://localhost:8080/myHostedConsultations/${this.state.id}`)
+        .get(`http://localhost:8080/myHostedConsultations/${this.state.user.id}`)
         .then(response => {
           this.setState({ hostedConsultations: response.data });
         });
@@ -43,7 +59,7 @@ class App extends Component {
           return (
             <div className="custom-ui" style={formStyle}>
               <NewConsultationForm
-                userID={this.state.id}
+                userID={this.state.user.id}
                 subjects={this.state.subjects}
               ></NewConsultationForm>
             </div>
@@ -55,6 +71,9 @@ class App extends Component {
       axios.get("http://localhost:8080/subjects").then(response => {
         this.setState({ subjects: response.data});
       });
+    },
+    setUser: (user: UserModel) => {
+      this.setState({ user: user});
     },
     subjects: []
   };

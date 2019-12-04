@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import UserModel from "../models/UserModel"
 
 interface Props {
-  username: string;
+  setUser: Function;
 }
 
 interface State {
@@ -30,10 +30,10 @@ export class LoginForm extends Component<Props, State> {
         password: this.state.password
       }
     }).then(response => {
-      //TODO: save logged in user
-      const responseToken = response.data.token;
-      const username = response.data.username;
-      
+      //TODO: save logged in user's token
+      const responseToken: string = response.data.token;
+      const user: UserModel = response.data.user;
+      this.props.setUser(user);
     });
   };
 
