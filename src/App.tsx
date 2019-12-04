@@ -5,14 +5,16 @@ import axios from "axios";
 import ConsultationList, { listType } from "./components/ConsultationList";
 import MyContext from "./components/MyContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from './components/PrivateRoute'
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
+import LoginForm from "./components/LoginForm";
 
 class App extends Component {
   state = {
-    username: "myUser",
-    id: 7,
-    level: "WEB",
+    username: "user",
+    id: 5,
+    level: "ADVANCE",
     consultations: [],
     joinedConsultations: [],
     hostedConsultations: [],
@@ -69,16 +71,11 @@ class App extends Component {
       <Router>
         <MyContext.Provider value={{ ...this.state }}>
           <div className="App">
-            <Header />
-            <Route exact path="/">
-              <ConsultationList listType={listType.All} />
-            </Route>
-            <Route path="/joinedConsultations">
-              <ConsultationList listType={listType.Joined} />
-            </Route>
-            <Route path="/hostedConsultations">
-              <ConsultationList listType={listType.Hosted} />
-            </Route>
+            <Header />            
+            <PrivateRoute exact path="/" component={ConsultationList} listType={listType.All}/>
+            <PrivateRoute path="/hostedConsultations" component={ConsultationList} listType={listType.Hosted}/>
+            <PrivateRoute path="/joinedConsultations" component={ConsultationList} listType={listType.Joined}/>
+            <Route path="/auth" component={LoginForm} />
           </div>
         </MyContext.Provider>
       </Router>
