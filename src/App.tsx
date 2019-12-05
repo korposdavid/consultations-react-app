@@ -5,33 +5,60 @@ import axios from "axios";
 import ConsultationList, { listType } from "./components/ConsultationList";
 import MyContext from "./components/MyContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
+<<<<<<< HEAD
 import { Registration } from "./components/Registration";
+=======
+import LoginForm from "./components/LoginForm";
+import UserModel from "./models/UserModel";
+import ConsultationModel from "./models/ConsultationModel";
+>>>>>>> origin/dev
 
-class App extends Component {
-  state = {
-    username: "myUser",
-    id: 7,
-    level: "WEB",
+interface Props {}
+
+interface State {
+  user: UserModel;
+  consultations: ConsultationModel[];
+  joinedConsultations: ConsultationModel[];
+  hostedConsultations: ConsultationModel[];
+  refetchUserConsultations: () => void;
+  refetchAllConsultations: () => void;
+  refetchHostedConsultations: () => void;
+  newConsultationForm: () => void;
+  fetchSubjects: () => void;
+  setUser: (user: UserModel) => void;
+  subjects: string[];
+}
+
+class App extends Component<Props, State> {
+  state: State = {
+    user: { username: "", level: "", id: 0 },
     consultations: [],
     joinedConsultations: [],
     hostedConsultations: [],
     refetchUserConsultations: () => {
       axios
-        .get(`http://localhost:8080/myJoinedConsultations/${this.state.id}`)
+        .get(
+          `http://localhost:8080/myJoinedConsultations/${this.state.user.id}`
+        )
         .then(response => {
           this.setState({ joinedConsultations: response.data });
         });
     },
     refetchAllConsultations: () => {
+      this.state.refetchHostedConsultations();
+      this.state.refetchUserConsultations();
       axios.get("http://localhost:8080/consultations").then(response => {
         this.setState({ consultations: response.data });
       });
     },
     refetchHostedConsultations: () => {
       axios
-        .get(`http://localhost:8080/myHostedConsultations/${this.state.id}`)
+        .get(
+          `http://localhost:8080/myHostedConsultations/${this.state.user.id}`
+        )
         .then(response => {
           this.setState({ hostedConsultations: response.data });
         });
@@ -42,7 +69,7 @@ class App extends Component {
           return (
             <div className="custom-ui" style={formStyle}>
               <NewConsultationForm
-                userID={this.state.id}
+                userID={this.state.user.id}
                 subjects={this.state.subjects}
               ></NewConsultationForm>
             </div>
@@ -55,13 +82,16 @@ class App extends Component {
         this.setState({ subjects: response.data });
       });
     },
-    subjects: []
+    setUser: (user: UserModel) => {
+      this.setState({ user: user }, () => {
+        this.state.refetchAllConsultations();
+      })
+    },
+    subjects: [],
   };
 
   componentDidMount() {
     this.state.refetchAllConsultations();
-    this.state.refetchUserConsultations();
-    this.state.refetchHostedConsultations();
     this.state.fetchSubjects();
   }
 
@@ -71,6 +101,7 @@ class App extends Component {
         <MyContext.Provider value={{ ...this.state }}>
           <div className="App">
             <Header />
+<<<<<<< HEAD
             <Route exact path="/">
               <Registration></Registration>
               <ConsultationList listType={listType.All} />
@@ -81,6 +112,28 @@ class App extends Component {
             <Route path="/hostedConsultations">
               <ConsultationList listType={listType.Hosted} />
             </Route>
+=======
+            <PrivateRoute
+              exact
+              path="/"
+              component={ConsultationList}
+              username={this.state.user.username}
+              listType={listType.All}
+            />
+            <PrivateRoute
+              path="/hostedConsultations"
+              component={ConsultationList}
+              username={this.state.user.username}
+              listType={listType.Hosted}
+            />
+            <PrivateRoute
+              path="/joinedConsultations"
+              component={ConsultationList}
+              username={this.state.user.username}
+              listType={listType.Joined}
+            />
+            <Route path="/auth" component={LoginForm} />
+>>>>>>> origin/dev
           </div>
         </MyContext.Provider>
       </Router>

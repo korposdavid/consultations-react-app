@@ -7,10 +7,16 @@ import { ConsultationButton } from "./ConsultationButton";
 interface Props {
   consultation: ConsultationModel;
 }
-interface State {}
+interface State {
+  showDetailedView: boolean;
+    isJoined: boolean;
+    showMore: string;
+    showLess: string;
+    buttonText:  string;
+}
 
 export default class ConsultationItem extends Component<Props, State> {
-  state = {
+  state: State = {
     showDetailedView: false,
     isJoined: false,
     showMore: "Show more!",
@@ -92,13 +98,13 @@ export default class ConsultationItem extends Component<Props, State> {
                 </button>
                 <ConsultationButton
                   consultation={this.props.consultation}
-                  userID={value.id}
+                  userID={value.user.id}
                   consultationID={id}
                   refetchUserConsultations={value.refetchUserConsultations}
                   refetchAllConsultations={value.refetchAllConsultations}
                   refetchHostedConsultations={value.refetchHostedConsultations}
                   joinedConsultations={value.joinedConsultations}
-                  userAlreadyJoined={this.userAlreadyJoined(value.id)}
+                  userAlreadyJoined={this.userAlreadyJoined(value.user.id)}
                 ></ConsultationButton>
               </div>
             </button>

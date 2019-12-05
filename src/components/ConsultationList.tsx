@@ -12,6 +12,7 @@ export default class ConsultationList extends Component<Props, State> {
   state = {};
 
   render() {
+    console.log(this.props.listType);
     return (
       <MyContext.Consumer>
         {value => {

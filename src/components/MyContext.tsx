@@ -1,9 +1,25 @@
 import { createContext } from "react";
+import UserModel from "../models/UserModel"
+import ConsultationModel from "../models/ConsultationModel"
 
-const MyContext = createContext({
-  username: "default",
-  id: 0,
-  level: "default",
+
+interface AppContextInterface {
+  user: UserModel;
+  consultations: ConsultationModel[];
+  joinedConsultations: ConsultationModel[];
+  hostedConsultations: ConsultationModel[];
+  refetchUserConsultations: () => void;
+  refetchAllConsultations: () => void;
+  refetchHostedConsultations: () => void;
+  newConsultationForm: () => void;
+  fetchSubjects: () => void;
+  setUser: (user: UserModel) => void;
+  subjects: string[]
+}
+
+const MyContext = createContext<AppContextInterface>({
+  user: {username: '', level: '', id: 0},
+  setUser: (user: UserModel) => {},
   consultations: [],
   joinedConsultations: [],
   hostedConsultations: [],
