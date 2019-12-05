@@ -47,77 +47,95 @@ export class Registration extends Component<Props, State> {
 
   render() {
     return (
-      <Form onSubmit={this.handleRegister}>
-        <Form.Row>
-          <Form.Group as={Col} controlId="username">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              name="username"
-              onChange={this.handleChange}
-              placeholder="Enter username"
-              required
-            />
-          </Form.Group>
+      <div style={formStyle}>
+        <Form onSubmit={this.handleRegister}>
+          <Form.Row>
+            <Form.Group as={Col} controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                onChange={this.handleChange}
+                placeholder="Enter username"
+                required
+              />
+            </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              onChange={this.handleChange}
-              placeholder="Enter email"
-              required
-            />
-          </Form.Group>
+            <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                onChange={this.handleChange}
+                placeholder="Enter email"
+                required
+              />
+            </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPassword1">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password1"
-              onChange={this.handleChange}
-              placeholder="Password"
-              required
-            />
-          </Form.Group>
+            <Form.Group as={Col} controlId="formGridPassword1">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password1"
+                onChange={this.handleChange}
+                placeholder="Password"
+                required
+              />
+            </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPassword2">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password2"
-              onChange={this.handleChange}
-              placeholder="Password"
-              required
-            />
-          </Form.Group>
-        </Form.Row>
+            <Form.Group as={Col} controlId="formGridPassword2">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password2"
+                onChange={this.handleChange}
+                placeholder="Password"
+                required
+                style={backgroundInput}
+              />
+            </Form.Group>
+          </Form.Row>
 
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridLevel">
-            <Form.Label>Level</Form.Label>
-            <Form.Control
-              name="level"
-              onChange={this.handleChange}
-              required
-              as="select"
-            >
-              <option></option>
-              <option>PROGBASICS</option>
-              <option>WEB</option>
-              <option>OOP</option>
-              <option>ADVANCE</option>
-            </Form.Control>
-          </Form.Group>
-        </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGridLevel">
+              <Form.Label>Level</Form.Label>
+              <Form.Control
+                name="level"
+                onChange={this.handleChange}
+                required
+                as="select"
+              >
+                <option></option>
+                <option>PROGBASICS</option>
+                <option>WEB</option>
+                <option>OOP</option>
+                <option>ADVANCE</option>
+              </Form.Control>
+            </Form.Group>
+          </Form.Row>
 
-        <Button variant="primary" type="submit">
-          Registration
-        </Button>
-      </Form>
+          <Button variant="success" type="submit">
+            Registration
+          </Button>
+        </Form>
+      </div>
     );
   }
 }
+
+const backgroundInput = {
+  background: "rgba(255,255,255,0)",
+  opacity: "1"
+};
+
+const formStyle = {
+  background: "rgba(250,255,250,1)",
+  padding: "20px",
+  margin: "15px",
+  border: "1px solid black",
+  borderRadius: "0.25rem",
+  opacity: "1",
+  width: "75%"
+};
 
 export default Registration;
