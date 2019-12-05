@@ -4,10 +4,12 @@ import React from "react";
 
 interface Props {
   newConsultationForm: Function;
+  logout: Function;
 }
 
-export const LoggedInHeaderPart: React.FC<Props> =  props => {
+export const LoggedInHeaderPart: React.FC<Props> = props => {
   const linkClass = "btn btn-outline-success m-2";
+  const buttonClass = "outline-success m-2";
 
   return (
     <div>
@@ -20,11 +22,11 @@ export const LoggedInHeaderPart: React.FC<Props> =  props => {
       <Link className={linkClass} to="/hostedConsultations">
         Hosted Consultations
       </Link>
-      <Button
-        variant="outline-success"
-        onClick={() => props.newConsultationForm()}
-      >
+      <Button bsPrefix={linkClass} onClick={() => props.newConsultationForm()}>
         New Consultation
+      </Button>
+      <Button bsPrefix={linkClass} onClick={() => props.logout()}>
+        Logout
       </Button>
     </div>
   );
