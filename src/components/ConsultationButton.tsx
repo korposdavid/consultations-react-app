@@ -5,9 +5,7 @@ import ConsultationModel from "../models/ConsultationModel";
 
 interface Props {
   userID: number;
-  refetchUserConsultations: Function;
   refetchAllConsultations: Function;
-  refetchHostedConsultations: Function;
   joinedConsultations: ConsultationModel[];
   userAlreadyJoined: boolean;
   consultation: ConsultationModel;
@@ -34,7 +32,6 @@ export const ConsultationButton: React.FC<Props> = props => {
         consultationID: props.consultation.id
       }
     }).then(response => {
-      props.refetchUserConsultations();
       props.refetchAllConsultations();
     });
   }
@@ -48,7 +45,6 @@ export const ConsultationButton: React.FC<Props> = props => {
         consultationID: props.consultation.id
       }
     }).then(response => {
-      props.refetchHostedConsultations();
       props.refetchAllConsultations();
     });
   }
@@ -62,28 +58,27 @@ export const ConsultationButton: React.FC<Props> = props => {
         consultationID: props.consultation.id
       }
     }).then(response => {
-      props.refetchUserConsultations();
       props.refetchAllConsultations();
     });
   }
 
-  function submitDrop() {
+  function submitDestroy(functionToCall: Function, messageSnippet: string) {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui">
-            <h1>Are you sure to drop the consultation?</h1>
+            <h1>Are you sure to {messageSnippet.toLowerCase()} the consultation?</h1>
             <button className="btn btn-warning m-2" onClick={() => onClose()}>
               Exit
             </button>
             <button
               className="btn btn-danger m-2"
               onClick={() => {
-                handleDrop();
+                functionToCall();
                 onClose();
               }}
             >
-              Yes, Drop it!
+              Yes, {messageSnippet} it!
             </button>
           </div>
         );
@@ -91,7 +86,7 @@ export const ConsultationButton: React.FC<Props> = props => {
     });
   }
   return isUserIsHost() ? (
-    <button onClick={handleCancel} className="btn btn-danger m-2">Cancel</button>
+    <button onClick={() => submitDestroy(handleCancel, "Cancel")} className="btn btn-danger m-2">Cancel</button>
   ) : !props.userAlreadyJoined ? (
     <button
       disabled={isJoinDisabled()}
@@ -101,7 +96,7 @@ export const ConsultationButton: React.FC<Props> = props => {
       Join
     </button>
   ) : (
-    <button onClick={submitDrop} className="btn btn-danger m-2">
+    <button onClick={() => submitDestroy(handleDrop, "Drop")} className="btn btn-danger m-2">
       Drop
     </button>
   );
