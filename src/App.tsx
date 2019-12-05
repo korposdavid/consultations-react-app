@@ -7,6 +7,7 @@ import MyContext from "./components/MyContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
+import { Registration } from "./components/Registration";
 
 class App extends Component {
   state = {
@@ -51,7 +52,7 @@ class App extends Component {
     },
     fetchSubjects: () => {
       axios.get("http://localhost:8080/subjects").then(response => {
-        this.setState({ subjects: response.data});
+        this.setState({ subjects: response.data });
       });
     },
     subjects: []
@@ -71,6 +72,7 @@ class App extends Component {
           <div className="App">
             <Header />
             <Route exact path="/">
+              <Registration></Registration>
               <ConsultationList listType={listType.All} />
             </Route>
             <Route path="/joinedConsultations">
