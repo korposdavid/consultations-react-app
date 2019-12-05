@@ -22,7 +22,7 @@ export const LoggedInHeaderPart: React.FC<Props> =  props => {
       </Link>
       <Button
         variant="outline-success"
-        onClick={() => props.newConsultationForm}
+        onClick={() => props.newConsultationForm()}
       >
         New Consultation
       </Button>
