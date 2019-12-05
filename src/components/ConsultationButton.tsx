@@ -5,7 +5,6 @@ import ConsultationModel from "../models/ConsultationModel";
 
 interface Props {
   userID: number;
-  consultationID: number;
   refetchUserConsultations: Function;
   refetchAllConsultations: Function;
   refetchHostedConsultations: Function;
@@ -16,13 +15,14 @@ interface Props {
 
 export const ConsultationButton: React.FC<Props> = props => {
   function isJoinDisabled() {
-    if (props.consultation.host.id === props.userID) {
-      return true;
-    }
     return !(
       props.consultation.participantLimit >
       props.consultation.participants.length
     );
+  }
+
+  function isUserIsHost() {
+    return props.consultation.host.id === props.userID;
   }
 
   function handleJoin() {
@@ -31,10 +31,24 @@ export const ConsultationButton: React.FC<Props> = props => {
       url: "http://localhost:8080/joinConsultation",
       data: {
         userID: props.userID,
-        consultationID: props.consultationID
+        consultationID: props.consultation.id
       }
     }).then(response => {
       props.refetchUserConsultations();
+      props.refetchAllConsultations();
+    });
+  }
+
+  function handleCancel() {
+    axios({
+      method: "post",
+      url: "http://localhost:8080/cancelConsultation",
+      data: {
+        userID: props.userID,
+        consultationID: props.consultation.id
+      }
+    }).then(response => {
+      props.refetchHostedConsultations();
       props.refetchAllConsultations();
     });
   }
@@ -45,7 +59,7 @@ export const ConsultationButton: React.FC<Props> = props => {
       url: "http://localhost:8080/dropConsultation",
       data: {
         userID: props.userID,
-        consultationID: props.consultationID
+        consultationID: props.consultation.id
       }
     }).then(response => {
       props.refetchUserConsultations();
@@ -76,7 +90,9 @@ export const ConsultationButton: React.FC<Props> = props => {
       }
     });
   }
-  return !props.userAlreadyJoined ? (
+  return isUserIsHost() ? (
+    <button onClick={handleCancel} className="btn btn-danger m-2">Cancel</button>
+  ) : !props.userAlreadyJoined ? (
     <button
       disabled={isJoinDisabled()}
       onClick={handleJoin}

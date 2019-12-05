@@ -99,7 +99,6 @@ export default class ConsultationItem extends Component<Props, State> {
                 <ConsultationButton
                   consultation={this.props.consultation}
                   userID={value.user.id}
-                  consultationID={id}
                   refetchUserConsultations={value.refetchUserConsultations}
                   refetchAllConsultations={value.refetchAllConsultations}
                   refetchHostedConsultations={value.refetchHostedConsultations}
