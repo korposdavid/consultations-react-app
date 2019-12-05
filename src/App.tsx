@@ -8,13 +8,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
-<<<<<<< HEAD
-import { Registration } from "./components/Registration";
-=======
 import LoginForm from "./components/LoginForm";
 import UserModel from "./models/UserModel";
 import ConsultationModel from "./models/ConsultationModel";
->>>>>>> origin/dev
+import Registration from "./components/Registration";
 
 interface Props {}
 
@@ -85,9 +82,9 @@ class App extends Component<Props, State> {
     setUser: (user: UserModel) => {
       this.setState({ user: user }, () => {
         this.state.refetchAllConsultations();
-      })
+      });
     },
-    subjects: [],
+    subjects: []
   };
 
   componentDidMount() {
@@ -101,18 +98,6 @@ class App extends Component<Props, State> {
         <MyContext.Provider value={{ ...this.state }}>
           <div className="App">
             <Header />
-<<<<<<< HEAD
-            <Route exact path="/">
-              <Registration></Registration>
-              <ConsultationList listType={listType.All} />
-            </Route>
-            <Route path="/joinedConsultations">
-              <ConsultationList listType={listType.Joined} />
-            </Route>
-            <Route path="/hostedConsultations">
-              <ConsultationList listType={listType.Hosted} />
-            </Route>
-=======
             <PrivateRoute
               exact
               path="/"
@@ -132,8 +117,7 @@ class App extends Component<Props, State> {
               username={this.state.user.username}
               listType={listType.Joined}
             />
-            <Route path="/auth" component={LoginForm} />
->>>>>>> origin/dev
+            <Route path="/auth" component={Registration} />
           </div>
         </MyContext.Provider>
       </Router>
