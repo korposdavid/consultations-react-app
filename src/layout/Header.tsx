@@ -20,7 +20,7 @@ export const Header: React.FC<Props> = () => {
               <Col>
                 {value.user.id !== 0 ? (
                   <LoggedInHeaderPart
-                    newConsultationForm={value.newConsultationForm}
+                    newConsultationForm={value.newConsultationForm} logout={value.logout}
                   ></LoggedInHeaderPart>
                 ) : (
                   <LoginForm setUser={value.setUser}></LoginForm>

@@ -25,6 +25,7 @@ interface State {
   newConsultationForm: () => void;
   fetchSubjects: () => void;
   setUser: (user: UserModel) => void;
+  logout: () => void;
   subjects: string[];
 }
 
@@ -82,6 +83,10 @@ class App extends Component<Props, State> {
       this.setState({ user: user }, () => {
         this.state.refetchAllConsultations();
       })
+    },
+    logout: () => {
+      this.state.setUser({ username: "", level: "", id: 0 });
+      localStorage.removeItem("token");
     },
     subjects: [],
   };
