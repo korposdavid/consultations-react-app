@@ -33,7 +33,7 @@ export class LoginForm extends Component<Props, State> {
       const responseToken: string = response.data.token;
       const user: UserModel = response.data.user;
       this.props.setUser(user);
-      localStorage.setItem('token', responseToken);
+      localStorage.setItem('token', responseToken);      
     }).catch(() => {
       alert('Your username or password was wrong.');
     })
