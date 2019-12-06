@@ -15,12 +15,13 @@ export const Header: React.FC<Props> = () => {
           <header className="headerStyle">
             <div>
               <Col>
-                <h1>Coolzontations</h1>
+                <h1 style={{ padding: "8px" }}>Coolzontations</h1>
               </Col>
               <Col>
                 {value.user.id !== 0 ? (
                   <LoggedInHeaderPart
-                    newConsultationForm={value.newConsultationForm} logout={value.logout}
+                    newConsultationForm={value.newConsultationForm}
+                    logout={value.logout}
                   ></LoggedInHeaderPart>
                 ) : (
                   <LoginForm setUser={value.setUser}></LoginForm>

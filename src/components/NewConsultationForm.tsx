@@ -41,7 +41,7 @@ export class NewConsultationForm extends Component<Props, State> {
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ [e.target.name]: e.target.value } as Pick<State, any>);
-  }
+  };
 
   handleSubjectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -49,8 +49,9 @@ export class NewConsultationForm extends Component<Props, State> {
     } else {
       this.setState({
         subjects: this.state.subjects.filter(
-          subject => subject !== e.target.name)
-      })
+          subject => subject !== e.target.name
+        )
+      });
     }
   };
 

@@ -8,11 +8,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import NewConsultationForm from "./components/NewConsultationForm";
 import { confirmAlert } from "react-confirm-alert";
-import LoginForm from "./components/LoginForm";
 import UserModel from "./models/UserModel";
 import ConsultationModel from "./models/ConsultationModel";
 import Registration from "./components/Registration";
-
 interface Props {}
 
 interface State {

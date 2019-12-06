@@ -8,8 +8,7 @@ interface Props {
 }
 
 export const LoggedInHeaderPart: React.FC<Props> = props => {
-  const linkClass = "btn btn-outline-success m-2";
-  const buttonClass = "outline-success m-2";
+  const linkClass = "btn btn-success m-2";
 
   return (
     <div>

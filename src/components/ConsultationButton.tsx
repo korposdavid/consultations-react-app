@@ -48,6 +48,7 @@ export const ConsultationButton: React.FC<Props> = props => {
         consultationID: props.consultation.id
       }
     }).then(response => {
+      console.log(response.data);
       props.refetchHostedConsultations();
       props.refetchAllConsultations();
     });
@@ -91,7 +92,9 @@ export const ConsultationButton: React.FC<Props> = props => {
     });
   }
   return isUserIsHost() ? (
-    <button onClick={handleCancel} className="btn btn-danger m-2">Cancel</button>
+    <button onClick={handleCancel} className="btn btn-danger m-2">
+      Cancel
+    </button>
   ) : !props.userAlreadyJoined ? (
     <button
       disabled={isJoinDisabled()}
